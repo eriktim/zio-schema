@@ -219,17 +219,17 @@ object ProtobufCodec extends Codec {
         case (StandardType.Instant(formatter), v: Instant) =>
           encodePrimitive(fieldNumber, StandardType.StringType, formatter.format(v))
         case (StandardType.LocalDate(formatter), v: LocalDate) =>
-          encodePrimitive(fieldNumber, StandardType.StringType, formatter.format(v))
+          encodePrimitive(fieldNumber, StandardType.StringType, v.format(formatter))
         case (StandardType.LocalTime(formatter), v: LocalTime) =>
-          encodePrimitive(fieldNumber, StandardType.StringType, formatter.format(v))
+          encodePrimitive(fieldNumber, StandardType.StringType, v.format(formatter))
         case (StandardType.LocalDateTime(formatter), v: LocalDateTime) =>
-          encodePrimitive(fieldNumber, StandardType.StringType, formatter.format(v))
+          encodePrimitive(fieldNumber, StandardType.StringType, v.format(formatter))
         case (StandardType.OffsetTime(formatter), v: OffsetTime) =>
-          encodePrimitive(fieldNumber, StandardType.StringType, formatter.format(v))
+          encodePrimitive(fieldNumber, StandardType.StringType, v.format(formatter))
         case (StandardType.OffsetDateTime(formatter), v: OffsetDateTime) =>
-          encodePrimitive(fieldNumber, StandardType.StringType, formatter.format(v))
+          encodePrimitive(fieldNumber, StandardType.StringType, v.format(formatter))
         case (StandardType.ZonedDateTime(formatter), v: ZonedDateTime) =>
-          encodePrimitive(fieldNumber, StandardType.StringType, formatter.format(v))
+          encodePrimitive(fieldNumber, StandardType.StringType, v.format(formatter))
         case (_, _) =>
           Chunk.empty
       }
@@ -487,7 +487,7 @@ object ProtobufCodec extends Codec {
             )
             .asInstanceOf[Decoder[A]]
         case StandardType.Instant(formatter) =>
-          stringDecoder.map(formatter.parse(_)).asInstanceOf[Decoder[A]]
+          stringDecoder.map(v => Instant.from(formatter.parse(v))).asInstanceOf[Decoder[A]]
         case StandardType.LocalDate(formatter) =>
           stringDecoder.map(LocalDate.parse(_, formatter)).asInstanceOf[Decoder[A]]
         case StandardType.LocalTime(formatter) =>

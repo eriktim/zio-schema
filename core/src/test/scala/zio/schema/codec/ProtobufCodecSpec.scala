@@ -32,7 +32,6 @@ import scala.util.Try
 
 // TODO: use generators instead of manual encode/decode
 object ProtobufCodecSpec extends DefaultRunnableSpec {
-  private val dateTimeFormatter = DateTimeFormatter.ISO_DATE
 
   def spec = suite("ProtobufCodec Spec")(
     suite("Toplevel ProtobufCodec Spec")(
@@ -189,43 +188,43 @@ object ProtobufCodecSpec extends DefaultRunnableSpec {
       },
       testM("Should encode and decode instants successfully") {
         val value = Instant.now()
-        assertM(encodeAndDecode(Primitive(StandardType.Instant(dateTimeFormatter)), value))(
+        assertM(encodeAndDecode(Primitive(StandardType.Instant(DateTimeFormatter.ISO_INSTANT)), value))(
           equalTo(Chunk(value))
         )
       },
       testM("Should encode and decode local dates successfully") {
         val value = LocalDate.now()
-        assertM(encodeAndDecode(Primitive(StandardType.LocalDate(dateTimeFormatter)), value))(
+        assertM(encodeAndDecode(Primitive(StandardType.LocalDate(DateTimeFormatter.ISO_LOCAL_DATE)), value))(
           equalTo(Chunk(value))
         )
       },
       testM("Should encode and decode local times successfully") {
         val value = LocalTime.now()
-        assertM(encodeAndDecode(Primitive(StandardType.LocalTime(dateTimeFormatter)), value))(
+        assertM(encodeAndDecode(Primitive(StandardType.LocalTime(DateTimeFormatter.ISO_LOCAL_TIME)), value))(
           equalTo(Chunk(value))
         )
       },
       testM("Should encode and decode local date times successfully") {
         val value = LocalDateTime.now()
-        assertM(encodeAndDecode(Primitive(StandardType.LocalDateTime(dateTimeFormatter)), value))(
+        assertM(encodeAndDecode(Primitive(StandardType.LocalDateTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME)), value))(
           equalTo(Chunk(value))
         )
       },
       testM("Should encode and decode offset times successfully") {
         val value = OffsetTime.now()
-        assertM(encodeAndDecode(Primitive(StandardType.OffsetTime(dateTimeFormatter)), value))(
+        assertM(encodeAndDecode(Primitive(StandardType.OffsetTime(DateTimeFormatter.ISO_OFFSET_TIME)), value))(
           equalTo(Chunk(value))
         )
       },
       testM("Should encode and decode offset date times successfully") {
         val value = OffsetDateTime.now()
-        assertM(encodeAndDecode(Primitive(StandardType.OffsetDateTime(dateTimeFormatter)), value))(
+        assertM(encodeAndDecode(Primitive(StandardType.OffsetDateTime(DateTimeFormatter.ISO_OFFSET_DATE_TIME)), value))(
           equalTo(Chunk(value))
         )
       },
       testM("Should encode and decode zoned date times successfully") {
         val value = ZonedDateTime.now()
-        assertM(encodeAndDecode(Primitive(StandardType.ZonedDateTime(dateTimeFormatter)), value))(
+        assertM(encodeAndDecode(Primitive(StandardType.ZonedDateTime(DateTimeFormatter.ISO_ZONED_DATE_TIME)), value))(
           equalTo(Chunk(value))
         )
       },
